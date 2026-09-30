@@ -1,0 +1,54 @@
+:root {
+  --star-cool: #d7d8ff;
+  --star-warm: #ffe0a8;
+  --ink: #fff7f4;
+  --accent: #ffd0df;
+}
+
+html { background: #100b23; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background: #100b23;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.scene { background: radial-gradient(circle at 50% 15%, rgb(92 59 142 / 28%), transparent 52%); }
+.star { position: absolute; display: block; border-radius: 999px; box-shadow: 0 0 7px currentColor; animation: twinkle ease-in-out infinite alternate; }
+.bokeh { animation: bokeh 9s ease-in-out infinite alternate; filter: blur(1px); }
+.moon-wrap { position: relative; width: 100%; height: 100%; }
+.moon-haze { position: absolute; inset: -25%; border-radius: 999px; background: radial-gradient(circle, rgb(220 220 255 / 32%), transparent 67%); filter: blur(8px); }
+.moon-disc { position: absolute; inset: 8%; overflow: hidden; border-radius: 999px; background: radial-gradient(circle at 32% 30%, #fffef7 0%, #e5e9ff 57%, #b8b9dd 100%); box-shadow: 0 0 30px rgb(206 211 255 / 72%); }
+.moon-crater { position: absolute; display: block; border-radius: 999px; background: rgb(138 143 180 / 20%); box-shadow: inset 1px 1px 3px rgb(90 94 135 / 20%); }
+.moon-shade { position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(circle at 77% 31%, transparent 0 42%, rgb(77 69 126 / 23%) 100%); }
+.bf { position: absolute; display: block; animation-timing-function: linear; animation-iteration-count: infinite; }
+.bf svg { display: block; overflow: visible; animation: flap var(--flap, 1.2s) ease-in-out infinite alternate; }
+.bf-trail { position: absolute; width: 8px; height: 8px; border-radius: 999px; background: rgb(255 211 242 / 75%); filter: blur(2px); box-shadow: -24px 11px 11px 3px rgb(255 203 239 / 42%); }
+.bf-wing { transform-box: fill-box; }
+.bf-wing-l { transform-origin: right center; animation: wing-left var(--flap, 1.2s) ease-in-out infinite alternate; }
+.bf-wing-r { transform-origin: left center; animation: wing-right var(--flap, 1.2s) ease-in-out infinite alternate; }
+.heart-glow { color: #ffd2e3; text-shadow: 0 0 12px rgb(255 170 211 / 80%); }
+.eyebrow, .wish-text { color: #ffe7ef; font-family: Georgia, "Times New Roman", serif; text-shadow: 0 2px 16px rgb(13 7 28 / 85%); }
+.title-serif { color: #fff5fa; font-family: Georgia, "Times New Roman", serif; letter-spacing: 0.04em; text-shadow: 0 3px 22px rgb(0 0 0 / 50%); }
+.title-script { color: #ffd3e5; font-family: "Brush Script MT", "Segoe Script", cursive; text-shadow: 0 3px 24px rgb(255 136 191 / 38%); }
+.wish-accent { color: #ffd5e6; font-style: italic; }
+.hairline, .hairline-r { background: linear-gradient(90deg, transparent, rgb(255 213 233 / 85%)); }
+.hairline-r { transform: scaleX(-1); }
+.cake-glow { background: radial-gradient(ellipse, rgb(255 179 210 / 38%), transparent 65%); filter: blur(16px); }
+.cake-reflection { mask-image: linear-gradient(to bottom, rgb(0 0 0 / 45%), transparent 70%); mix-blend-mode: screen; }
+.pointer-events-none img[src$="cake-fixed.png"] { mix-blend-mode: screen; }
+.float-soft { animation: float-soft 3.5s ease-in-out infinite; }
+
+@keyframes twinkle { from { transform: scale(0.65); opacity: 0.28; } to { transform: scale(1.35); opacity: 1; } }
+@keyframes bokeh { from { transform: translateY(0) scale(0.9); opacity: 0.55; } to { transform: translateY(-14px) scale(1.1); opacity: 0.95; } }
+@keyframes flap { from { transform: scaleY(0.82); } to { transform: scaleY(1.08); } }
+@keyframes wing-left { from { transform: rotateY(4deg) rotate(-8deg); } to { transform: rotateY(52deg) rotate(9deg); } }
+@keyframes wing-right { from { transform: rotateY(-4deg) rotate(8deg); } to { transform: rotateY(-52deg) rotate(-9deg); } }
+@keyframes flightA { 0% { transform: translate(-6vw, 9vh); } 50% { transform: translate(42vw, -8vh) rotate(8deg); } 100% { transform: translate(88vw, 16vh) rotate(-6deg); } }
+@keyframes flightB { 0% { transform: translate(95vw, 12vh) scale(0.8); } 50% { transform: translate(44vw, 26vh) scale(1); } 100% { transform: translate(-12vw, 4vh) scale(0.85); } }
+@keyframes flightC { 0% { transform: translate(10vw, 82vh) scale(0.75); } 50% { transform: translate(60vw, 30vh) scale(1); } 100% { transform: translate(105vw, 60vh) scale(0.8); } }
+@keyframes float-soft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .star, .float-soft, .bokeh, .bf, .bf svg, .bf-wing { animation: none; }
+}

@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/css2" data-precedence="default" />
+  <link rel="stylesheet" href="css/styles-D7swyh47.css"
+    data-precedence="default" />
+  <title>Make a Wish — Happy Birthday Deepika</title>
+  <meta name="description"
+    content="Blow out the candle and watch the night sky open into a magical birthday world of fireworks, stars and butterflies for Deepika." />
+  <meta property="og:title" content="Make a Wish — Happy Birthday Deepika" />
+  <meta property="og:description"
+    content="A cinematic candle, fireworks and a magical midnight birthday world made just for Deepika." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="modulepreload" href="js/index-rCFK9_Bq.js" />
+  <link rel="modulepreload" href="js/routes-unnAuZaB.js" />
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="anonymous" />
+  <style>
+    @font-face {
+      font-family: "CameraPlainVariable";
+      src: url("https://cdn.gpteng.co/mcp-widgets/v1/fonts/CameraPlainVariable.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+
+  </style>
+  <script defer="" src="js/_flock.js"
+    data-proxy-url="/~api/analytics"></script>
+  <meta name="twitter:title" content="Make a Wish — Happy Birthday Deepika" />
+  <meta name="twitter:description"
+    content="A cinematic candle, fireworks and a magical midnight birthday world made just for Deepika." />
+</head>
+
+<body>
+  <!--$-->
+  <main class="stage">
+    <div class="candle-stage">
+      <button type="button" aria-label="Blow out the candle" class="candle-hit">
+        <span class="sr-only">Blow out the candle</span>
+        <div class="candle">
+          <div class="glow"></div>
+          <div class="flame-wrap flame-wrap--lit">
+            <div class="flame-outer"></div>
+            <div class="flame-inner"></div>
+            <div class="flame-core"></div>
+          </div>
+          <div class="smoke">
+            <span style="animation-delay: 0s"></span><span style="animation-delay: 0.35s"></span><span
+              style="animation-delay: 0.7s"></span>
+          </div>
+          <div class="wick"></div>
+          <div class="wax">
+            <div class="wax-top"></div>
+            <div class="wax-drip wax-drip--a"></div>
+            <div class="wax-drip wax-drip--b"></div>
+          </div>
+          <div class="pool"></div>
+        </div>
+      </button>
+      <div class="motes" aria-hidden="true">
+        <span style="left: 62.3802%; animation-delay: 1.14948s; animation-duration: 12.4813s;"></span>
+        <span style="left: 66.0989%; animation-delay: 3.75159s; animation-duration: 14.4154s;"></span>
+        <span style="left: 20.1915%; animation-delay: 1.79219s; animation-duration: 10.8558s;"></span>
+        <span style="left: 58.0398%; animation-delay: 7.75832s; animation-duration: 16.0994s;"></span>
+        <span style="left: 67.1065%; animation-delay: 0.299327s; animation-duration: 11.9814s;"></span>
+        <span style="left: 86.9216%; animation-delay: 7.24005s; animation-duration: 11.7889s;"></span>
+        <span style="left: 84.6334%; animation-delay: 7.49934s; animation-duration: 12.0553s;"></span>
+        <span style="left: 42.932%; animation-delay: 7.73051s; animation-duration: 9.37309s;"></span>
+        <span style="left: 46.852%; animation-delay: 6.45739s; animation-duration: 14.218s;"></span>
+        <span style="left: 67.6029%; animation-delay: 2.12252s; animation-duration: 14.6943s;"></span>
+        <span style="left: 10.5892%; animation-delay: 1.02979s; animation-duration: 11.4515s;"></span>
+        <span style="left: 79.9936%; animation-delay: 6.32306s; animation-duration: 15.2628s;"></span>
+        <span style="left: 32.3596%; animation-delay: 1.70643s; animation-duration: 9.87935s;"></span>
+        <span style="left: 83.0084%; animation-delay: 3.77298s; animation-duration: 10.4628s;"></span>
+      </div>
+      <p class="wish-text">Make a wish…</p>
+    </div>
+    <canvas class="fireworks-canvas" aria-hidden="true"></canvas>
+    <div class="flash" aria-hidden="true"></div>
+  </main>
+  <!--/$-->
+
+
+
+  <style id="deepika-entry-fade">
+  #entryFade {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #05000d;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+  }
+
+  body.entry-ready #entryFade {
+    opacity: 0;
+  }
+</style>
+
+  <div id="entryFade" aria-hidden="true"></div>
+
+  <style>
+ body.birthday-transition {
+  background: #020006 !important;
+}
+
+.stage--leaving {
+  animation: candleSceneFadeOut 0.9s ease forwards;
+}
+
+.candle-stage--leaving {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+@keyframes candleSceneFadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+</style>
+
+
+
+  <script>
+  (function() {
+    let audioCtx = null;
+    let fireworksBuffer = null;
+
+    // Transition timers
+    let redirectTimer = null;
+    let fadeTimer = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        let AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) audioCtx = new AudioContextClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    // Preload & decode fireworks MP3 for low-latency simultaneous blasts
+    async function loadFireworksAudio() {
+      let ctx = getAudioContext();
+      if (!ctx) return;
+      try {
+        const resp = await fetch('assets/sounds/fireworks.mp3');
+        const arrayBuffer = await resp.arrayBuffer();
+        fireworksBuffer = await ctx.decodeAudioData(arrayBuffer);
+      } catch (err) {
+        // Fallback handled smoothly if served under strict local CORS
+      }
+    }
+
+    // Synthesize launch whistle sound
+    function playWhistleSound(dur = 0.8) {
+      let ctx = getAudioContext();
+      if (!ctx) return;
+      let t = ctx.currentTime;
+      let osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(450, t);
+      osc.frequency.exponentialRampToValueAtTime(1600, t + dur);
+      let g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.035, t + 0.1);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      osc.connect(g).connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + dur + 0.05);
+    }
+
+    // Play blast audio on firework explosion
+    function playExplosionSound(size = 1) {
+      let ctx = getAudioContext();
+      if (!ctx) return;
+
+      if (fireworksBuffer) {
+        let src = ctx.createBufferSource();
+        src.buffer = fireworksBuffer;
+        let gain = ctx.createGain();
+        gain.gain.value = Math.min(1.0, 0.4 + size * 0.5);
+        // Slight pitch and timing variation for each blast
+        src.playbackRate.value = 0.88 + Math.random() * 0.26;
+        src.connect(gain).connect(ctx.destination);
+        src.start(0);
+      } else {
+        let audio = new Audio('assets/sounds/fireworks.mp3');
+        audio.volume = Math.min(1.0, 0.4 + size * 0.5);
+        audio.play().catch(() => {});
+      }
+    }
+
+    function createNoiseBuffer(ctx, duration) {
+      let sampleRate = ctx.sampleRate;
+      let bufferSize = Math.floor(sampleRate * duration);
+      let buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+      let data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      return buffer;
+    }
+
+    function playBlowSound() {
+      let ctx = getAudioContext();
+      if (!ctx) return;
+      let t = ctx.currentTime;
+      let src = ctx.createBufferSource();
+      src.buffer = createNoiseBuffer(ctx, 0.7);
+      let filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(500, t);
+      filter.frequency.exponentialRampToValueAtTime(1600, t + 0.18);
+      filter.frequency.exponentialRampToValueAtTime(300, t + 0.6);
+      filter.Q.value = 0.8;
+      let gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(0.35, t + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
+      src.connect(filter).connect(gain).connect(ctx.destination);
+      src.start(t);
+      src.stop(t + 0.7);
+    }
+
+    // State Handler & DOM Bindings
+    let state = 'lit';
+    function initApp() {
+      document.body.classList.add('entry-ready');
+      let btn = document.querySelector('.candle-hit');
+      if (!btn || btn.dataset.initialized === 'true') return;
+
+      btn.dataset.initialized = 'true';
+      btn.addEventListener('click', handleBlow);
+      btn.addEventListener('touchstart', handleBlow, { passive: false });
+    }
+
+    function triggerFlash() {
+      let flashEl = document.querySelector('.flash');
+      if (!flashEl) return;
+      flashEl.classList.add('flash--on');
+      setTimeout(() => {
+        flashEl.classList.remove('flash--on');
+      }, 140);
+    }
+
+    function handleBlow(e) {
+      if (e) e.preventDefault();
+      if (state !== 'lit') return;
+      state = 'blowing';
+
+      getAudioContext();
+      loadFireworksAudio();
+      playBlowSound();
+
+      let candleStage = document.querySelector('.candle-stage');
+      let flameWrap = document.querySelector('.flame-wrap');
+      let glow = document.querySelector('.glow');
+      let smoke = document.querySelector('.smoke');
+      let pool = document.querySelector('.pool');
+      let wishText = document.querySelector('.wish-text');
+
+      if (flameWrap) {
+        flameWrap.className = 'flame-wrap flame-wrap--blowing';
+      }
+
+      setTimeout(() => {
+        state = 'out';
+        if (flameWrap) flameWrap.className = 'flame-wrap flame-wrap--out';
+        if (glow) glow.classList.add('glow--off');
+        if (pool) pool.classList.add('pool--off');
+        if (smoke) smoke.classList.add('smoke--on');
+        if (wishText) wishText.classList.add('wish-text--gone');
+      }, 520);
+
+      setTimeout(() => {
+        state = 'gone';
+        if (flameWrap) flameWrap.className = 'flame-wrap flame-wrap--gone';
+        if (candleStage) candleStage.classList.add('candle-stage--gone', 'candle-stage--dim');
+      }, 1900);
+
+      setTimeout(() => {
+  startFireworks();
+
+  if (redirectTimer) {
+    clearTimeout(redirectTimer);
+  }
+
+  redirectTimer = setTimeout(
+    finishCandleExperience,
+    7000
+  );
+}, 2600);
+    }
+    function finishCandleExperience() {
+  fireworksRunning = false;
+
+  if (redirectTimer) {
+    clearTimeout(redirectTimer);
+    redirectTimer = null;
+  }
+
+  const stage =
+    document.querySelector('.stage');
+
+  const candleStage =
+    document.querySelector('.candle-stage');
+
+  if (stage) {
+    stage.classList.add(
+      'stage--leaving'
+    );
+  }
+
+  if (candleStage) {
+    candleStage.classList.add(
+      'candle-stage--leaving'
+    );
+  }
+
+  document.body.classList.add(
+    'birthday-transition'
+  );
+
+  if (fadeTimer) {
+    clearTimeout(fadeTimer);
+  }
+
+  fadeTimer = setTimeout(() => {
+    fadeTimer = null;
+    window.location.href = 'Birthday.html';
+  }, 900);
+}
+
+    // Canvas Fireworks Engine
+    let fireworksRunning = false;
+    function startFireworks() {
+      let canvas = document.querySelector('.fireworks-canvas');
+      if (!canvas) return;
+      fireworksRunning = true;
+
+      let ctx = canvas.getContext('2d');
+      let w = 0, h = 0, dpr = 1;
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.clientWidth;
+        h = canvas.clientHeight;
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      let particles = [];
+      let rockets = [];
+      let vibrantHues = [330, 310, 280, 260, 215, 190, 165, 120, 50, 25, 0];
+
+      function explode(rocket) {
+        triggerFlash();
+        playExplosionSound(rocket.size);
+
+        let count = Math.round((70 + Math.random() * 110) * rocket.size);
+        let speed = 2.4 + rocket.size * 3.2;
+
+        for (let i = 0; i < count; i++) {
+          let angle = (Math.PI * 2 * i) / count + Math.random() * 0.14;
+          let v = speed * (0.55 + Math.random() * 0.6);
+          if (rocket.shape === 'ring') v = speed * (0.94 + Math.random() * 0.12);
+          if (rocket.shape === 'palm') v = speed * (i % 6 === 0 ? 1.15 : 0.45);
+          let isWillow = rocket.shape === 'willow';
+
+          particles.push({
+            x: rocket.x,
+            y: rocket.y,
+            vx: Math.cos(angle) * v,
+            vy: Math.sin(angle) * v * (isWillow ? 0.75 : 1),
+            life: 0,
+            maxLife: (isWillow ? 140 : 75) + Math.random() * 60,
+            hue: rocket.hue + (Math.random() * 32 - 16),
+            sat: 100,
+            light: 65 + Math.random() * 18,
+            size: 1.2 + Math.random() * 1.8 * rocket.size,
+            drag: isWillow ? 0.978 : 0.962,
+            glitter: Math.random() < 0.35
+          });
+        }
+
+        // Secondary spark core
+        for (let i = 0; i < 24; i++) {
+          let angle = Math.random() * Math.PI * 2;
+          particles.push({
+            x: rocket.x,
+            y: rocket.y,
+            vx: Math.cos(angle) * Math.random() * 2.8,
+            vy: Math.sin(angle) * Math.random() * 2.8,
+            life: 0,
+            maxLife: 24,
+            hue: (rocket.hue + 45) % 360,
+            sat: 90,
+            light: 96,
+            size: 2.2,
+            drag: 0.9,
+            glitter: false
+          });
+        }
+      }
+
+      function launchRocket(opts = {}) {
+        let size = opts.size ?? 0.65 + Math.random() * 0.75;
+        let hue = opts.hue ?? vibrantHues[Math.floor(Math.random() * vibrantHues.length)];
+        let rx = opts.x ?? w * (0.1 + Math.random() * 0.8);
+        let targetY = opts.targetY ?? h * (0.1 + Math.random() * 0.4);
+        let shapes = ['sphere', 'ring', 'willow', 'palm', 'sphere'];
+        let shape = opts.shape ?? shapes[Math.floor(Math.random() * shapes.length)];
+
+        rockets.push({
+          x: rx,
+          y: h + 10,
+          vx: (Math.random() - 0.5) * 1.4,
+          vy: -(9.5 + Math.random() * 4),
+          targetY: targetY,
+          hue: hue,
+          size: size,
+          shape: shape
+        });
+
+        playWhistleSound(0.7);
+      }
+
+      // Rich opening sequence
+      let seq = [
+        { delay: 0, opts: { x: w * 0.5, size: 1.2, hue: 330, shape: 'sphere' } },
+        { delay: 450, opts: { x: w * 0.25, size: 0.85, hue: 280, shape: 'ring' } },
+        { delay: 650, opts: { x: w * 0.75, size: 0.85, hue: 195, shape: 'ring' } },
+        { delay: 1200, opts: { x: w * 0.4, size: 1.1, hue: 45, shape: 'palm' } },
+        { delay: 1400, opts: { x: w * 0.6, size: 1.0, hue: 165, shape: 'willow' } },
+        { delay: 2000, opts: { x: w * 0.2, size: 0.9, hue: 310 } },
+        { delay: 2200, opts: { x: w * 0.8, size: 0.95, hue: 15 } },
+        { delay: 2500, opts: { x: w * 0.5, size: 1.3, hue: 50, shape: 'palm' } },
+        { delay: 3000, opts: { x: w * 0.35, size: 0.8, hue: 215, shape: 'ring' } },
+        { delay: 3200, opts: { x: w * 0.65, size: 0.8, hue: 330, shape: 'willow' } }
+      ];
+
+      seq.forEach(s => {
+        setTimeout(() => {
+          if (fireworksRunning) launchRocket(s.opts);
+        }, s.delay);
+      });
+
+      // High-energy continuous multi-salvo launcher
+      setInterval(() => {
+        if (!fireworksRunning || document.visibilityState !== 'visible') return;
+
+        let count = Math.random() < 0.6 ? 2 : 1;
+        for (let i = 0; i < count; i++) {
+          setTimeout(() => {
+            launchRocket({
+              size: 0.55 + Math.random() * 0.85,
+              hue: vibrantHues[Math.floor(Math.random() * vibrantHues.length)]
+            });
+          }, i * 220);
+        }
+      }, 1100);
+
+      // Interactive click to shoot fireworks
+      canvas.addEventListener('click', (e) => {
+        let rect = canvas.getBoundingClientRect();
+        let targetX = e.clientX - rect.left;
+        let targetY = e.clientY - rect.top;
+        launchRocket({
+          x: targetX,
+          targetY: targetY,
+          size: 1.1 + Math.random() * 0.4
+        });
+      });
+
+      function frame() {
+        if (!fireworksRunning) return;
+        requestAnimationFrame(frame);
+
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = 'rgba(4, 2, 12, 0.22)';
+        ctx.fillRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'lighter';
+
+        for (let i = rockets.length - 1; i >= 0; i--) {
+          let r = rockets[i];
+          r.x += r.vx;
+          r.y += r.vy;
+          r.vy += 0.14;
+
+          ctx.beginPath();
+          ctx.fillStyle = `hsla(${r.hue}, 95%, 80%, 0.95)`;
+          ctx.arc(r.x, r.y, 2.2, 0, Math.PI * 2);
+          ctx.fill();
+
+          particles.push({
+            x: r.x,
+            y: r.y,
+            vx: (Math.random() - 0.5) * 0.6,
+            vy: 0.5 + Math.random() * 0.6,
+            life: 0,
+            maxLife: 18 + Math.random() * 12,
+            hue: r.hue,
+            sat: 85,
+            light: 85,
+            size: 1.3,
+            drag: 0.93,
+            glitter: false
+          });
+
+          if (r.y <= r.targetY || r.vy >= -0.5) {
+            explode(r);
+            rockets.splice(i, 1);
+          }
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          let p = particles[i];
+          p.life++;
+          p.vx *= p.drag;
+          p.vy = p.vy * p.drag + 0.048;
+          p.x += p.vx;
+          p.y += p.vy;
+
+          let alpha = 1 - p.life / p.maxLife;
+          if (alpha <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+          if (p.glitter) alpha *= Math.random() < 0.5 ? 0.2 : 1;
+
+          ctx.beginPath();
+          ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.light}%, ${alpha})`;
+          ctx.arc(p.x, p.y, Math.max(0.2, p.size * (1 - (p.life / p.maxLife) * 0.4)), 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+  })();
+  </script>
+</body>
+
+</html>

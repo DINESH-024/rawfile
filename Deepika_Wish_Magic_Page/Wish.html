@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#12061f" />
+    <title>For Deepika — Make a Wish</title>
+    <style>
+      :root {
+        --gold: #f7d889;
+        --pink: #f58bd2;
+        --ink: #08030e;
+        --glass: rgba(25, 11, 43, 0.48);
+        --line: rgba(247, 216, 137, 0.44);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      body {
+        color: #fff;
+        background: var(--ink);
+        font-family: Georgia, "Times New Roman", serif;
+        overflow-x: hidden;
+      }
+      button,
+      textarea {
+        font: inherit;
+      }
+      .page {
+        min-height: 100svh;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background: #090412;
+      }
+      .bg,
+      .veil,
+      .stars,
+      .magic-vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .bg {
+        z-index: -6;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: saturate(0.95) brightness(0.72);
+        transform: scale(1.04);
+        animation: breathe 12s ease-in-out infinite alternate;
+      }
+      .veil {
+        z-index: -5;
+        background:
+          radial-gradient(
+            circle at 72% 23%,
+            rgba(104, 74, 255, 0.2),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 22% 64%,
+            rgba(255, 97, 201, 0.18),
+            transparent 34%
+          ),
+          linear-gradient(
+            90deg,
+            rgba(8, 2, 18, 0.28),
+            rgba(8, 2, 18, 0.04) 48%,
+            rgba(8, 2, 18, 0.48)
+          );
+      }
+      .magic-vignette {
+        z-index: -4;
+        box-shadow: inset 0 0 180px 35px rgba(0, 0, 0, 0.48);
+      }
+      .stars:before,
+      .stars:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.9) 0 1px,
+            transparent 1.4px
+          ),
+          radial-gradient(
+            circle,
+            rgba(247, 216, 137, 0.7) 0 1px,
+            transparent 1.5px
+          );
+        background-size:
+          140px 140px,
+          190px 190px;
+        background-position:
+          20px 10px,
+          60px 70px;
+        opacity: 0.45;
+        animation: driftStars 24s linear infinite;
+      }
+      .stars:after {
+        opacity: 0.2;
+        transform: scale(1.25);
+        animation-duration: 34s;
+        animation-direction: reverse;
+      }
+      .content {
+        width: min(1250px, 100%);
+        min-height: 100svh;
+        margin: 0 auto;
+        padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 4vw, 3.5rem) 1.5rem;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 1rem;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        animation: riseIn 0.9s ease both;
+      }
+      .brand,
+      .make-wish {
+        margin: 0;
+        color: var(--gold);
+        text-shadow: 0 0 18px rgba(247, 216, 137, 0.32);
+        font-style: italic;
+      }
+      .brand {
+        font-size: clamp(1.2rem, 2vw, 1.7rem);
+      }
+      .make-wish {
+        font-size: clamp(1rem, 1.8vw, 1.35rem);
+      }
+      .main {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        align-items: center;
+        gap: clamp(1.2rem, 4vw, 4rem);
+        min-height: 0;
+      }
+      .genie-side {
+        position: relative;
+        min-height: min(72vh, 700px);
+        display: grid;
+        place-items: center;
+        animation: riseIn 1s 0.3s ease both;
+      }
+      .genie {
+        width: min(100%, 560px);
+        max-height: 72vh;
+        object-fit: contain;
+        object-position: center;
+        filter: drop-shadow(0 0 55px rgba(91, 131, 255, 0.45));
+        animation: genieFloat 5.5s ease-in-out infinite;
+        user-select: none;
+        -webkit-user-drag: none;
+        transition:
+          filter 0.7s ease,
+          transform 0.7s ease;
+      }
+      .speech {
+        position: absolute;
+        top: 4%;
+        left: 1%;
+        width: min(18rem, 72%);
+        padding: 1.1rem 1.3rem;
+        border: 1px solid var(--line);
+        border-radius: 2rem;
+        background: rgba(24, 13, 40, 0.4);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 0 55px rgba(113, 73, 255, 0.28);
+        text-align: center;
+        color: #fff7ff;
+        animation: floatSoft 4.5s ease-in-out infinite;
+      }
+      .speech:after {
+        content: "";
+        position: absolute;
+        right: 1.5rem;
+        bottom: -0.8rem;
+        width: 1rem;
+        height: 1rem;
+        background: rgba(24, 13, 40, 0.88);
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        transform: rotate(45deg);
+      }
+      .speech strong {
+        display: block;
+        font-size: 1.28rem;
+        line-height: 1.35;
+      }
+      .wish-panel {
+        width: 100%;
+        max-width: 640px;
+        margin-inline: auto;
+        text-align: center;
+        animation: riseIn 1.1s 0.6s ease both;
+      }
+      .eyebrow {
+        margin: 0 0 0.5rem;
+        color: rgba(247, 216, 137, 0.88);
+        font-size: 0.78rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(2.8rem, 6vw, 5.5rem);
+        line-height: 0.98;
+        font-style: italic;
+        color: var(--gold);
+        text-shadow: 0 0 26px rgba(247, 216, 137, 0.38);
+      }
+      h1 span {
+        color: #fff;
+      }
+      .promise {
+        margin: 1.1rem auto 0;
+        max-width: 34rem;
+        color: rgba(255, 255, 255, 0.92);
+        font-size: clamp(1.1rem, 2.1vw, 1.55rem);
+        line-height: 1.45;
+        font-style: italic;
+      }
+      .wish-word {
+        color: var(--pink);
+      }
+      .real-word {
+        color: var(--gold);
+        text-shadow: 0 0 14px rgba(247, 216, 137, 0.36);
+      }
+      .day-word {
+        color: #c7b7ff;
+      }
+      .subtitle {
+        margin: 0.8rem auto 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 1.05rem;
+      }
+      form {
+        margin: 1.8rem auto 0;
+      }
+      .input-wrap {
+        position: relative;
+      }
+      textarea {
+        width: 100%;
+        min-height: 150px;
+        resize: vertical;
+        padding: 1.25rem 3.4rem 1.15rem 1.25rem;
+        color: #fff;
+        background: var(--glass);
+        border: 1px solid var(--line);
+        border-radius: 1.45rem;
+        outline: none;
+        box-shadow:
+          0 0 55px rgba(113, 73, 255, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(14px);
+        font-size: 1.1rem;
+        line-height: 1.5;
+      }
+      textarea::placeholder {
+        color: rgba(255, 255, 255, 0.55);
+      }
+      textarea:focus {
+        border-color: rgba(247, 216, 137, 0.88);
+        box-shadow:
+          0 0 0 3px rgba(247, 216, 137, 0.08),
+          0 0 60px rgba(135, 78, 255, 0.28);
+      }
+      .sparkle-icon {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        color: var(--gold);
+        font-size: 1.45rem;
+        pointer-events: none;
+        animation: twinkle 2s ease-in-out infinite;
+      }
+      .send {
+        border: 1px solid rgba(247, 216, 137, 0.78);
+        background: linear-gradient(135deg, #f48ed7, #a96cf7 58%, #7b6bff);
+        color: #fff;
+        padding: 0.95rem 2rem;
+        min-width: 220px;
+        border-radius: 999px;
+        cursor: pointer;
+        margin-top: 1rem;
+        box-shadow:
+          0 12px 45px rgba(174, 80, 225, 0.32),
+          0 0 28px rgba(247, 216, 137, 0.14);
+        transition:
+          transform 0.25s ease,
+          filter 0.25s ease,
+          box-shadow 0.25s ease;
+        font-size: 1.05rem;
+        font-weight: 700;
+      }
+      .send:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.08);
+        box-shadow:
+          0 15px 55px rgba(174, 80, 225, 0.42),
+          0 0 34px rgba(247, 216, 137, 0.22);
+      }
+      .send:disabled {
+        cursor: wait;
+        opacity: 0.72;
+      }
+      .privacy {
+        margin: 0.85rem 0 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.88rem;
+      }
+      .promise-row {
+        margin-top: 1.4rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(247, 216, 137, 0.16);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+      }
+      .promise-item {
+        min-width: 0;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 0.78rem;
+        line-height: 1.3;
+      }
+      .promise-item .icon {
+        display: block;
+        color: var(--gold);
+        font-size: 1.2rem;
+        margin-bottom: 0.25rem;
+        animation: twinkle 2.8s ease-in-out infinite;
+      }
+      footer {
+        text-align: center;
+        animation: riseIn 1s 1s ease both;
+      }
+      footer p {
+        margin: 0.2rem 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-style: italic;
+      }
+      footer p:first-child {
+        color: rgba(247, 216, 137, 0.9);
+      }
+      .magic-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(
+            circle at center,
+            rgba(80, 45, 160, 0.26),
+            rgba(5, 2, 12, 0.86) 64%
+          ),
+          rgba(3, 1, 8, 0.62);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          opacity 0.35s ease,
+          visibility 0.35s ease;
+        overflow: hidden;
+      }
+      .magic-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .magic-core {
+        position: relative;
+        width: min(88vw, 520px);
+        height: min(88vw, 520px);
+        display: grid;
+        place-items: center;
+      }
+      .magic-ring,
+      .magic-ring:before,
+      .magic-ring:after {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(247, 216, 137, 0.72);
+      }
+      .magic-ring {
+        inset: 10%;
+        box-shadow:
+          0 0 30px rgba(247, 216, 137, 0.18),
+          inset 0 0 30px rgba(247, 216, 137, 0.12);
+        animation: spin 3s linear infinite;
+      }
+      .magic-ring:before {
+        content: "";
+        inset: 10%;
+        border-style: dashed;
+        border-color: rgba(120, 180, 255, 0.62);
+        animation: spinReverse 2.2s linear infinite;
+      }
+      .magic-ring:after {
+        content: "";
+        inset: 24%;
+        border-color: rgba(245, 139, 210, 0.54);
+        animation: pulseRing 1s ease-in-out infinite;
+      }
+      .magic-orb {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #fff,
+          rgba(255, 255, 255, 0.8) 5%,
+          rgba(247, 216, 137, 0.95) 18%,
+          rgba(172, 102, 255, 0.74) 50%,
+          rgba(70, 180, 255, 0.16) 72%,
+          transparent 74%
+        );
+        box-shadow:
+          0 0 45px rgba(247, 216, 137, 0.62),
+          0 0 100px rgba(119, 96, 255, 0.52);
+        animation: orbPulse 1.1s ease-in-out infinite;
+      }
+      .magic-text {
+        position: absolute;
+        bottom: 3rem;
+        width: 100%;
+        text-align: center;
+        padding-inline: 1rem;
+      }
+      .magic-text h2 {
+        margin: 0;
+        font-size: clamp(1.6rem, 4vw, 2.5rem);
+        color: var(--gold);
+        text-shadow: 0 0 22px rgba(247, 216, 137, 0.42);
+      }
+      .magic-text p {
+        margin: 0.5rem auto 0;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 1rem;
+      }
+      .magic-burst {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow:
+          0 0 10px #fff,
+          0 0 24px var(--gold),
+          0 0 40px var(--pink);
+        opacity: 0;
+      }
+      .magic-overlay.active .magic-burst {
+        animation: burst 1.7s ease-out forwards;
+      }
+      .success-panel {
+        position: fixed;
+        inset: 0;
+        z-index: 70;
+        display: grid;
+        place-items: center;
+        padding: 1.2rem;
+        background: rgba(3, 1, 8, 0.72);
+        backdrop-filter: blur(12px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          opacity 0.4s ease,
+          visibility 0.4s ease;
+      }
+      .success-panel.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+      .success-card {
+        width: min(560px, 100%);
+        padding: 2rem;
+        border: 1px solid var(--line);
+        border-radius: 2rem;
+        background: linear-gradient(
+          180deg,
+          rgba(27, 13, 46, 0.82),
+          rgba(12, 6, 23, 0.92)
+        );
+        box-shadow: 0 0 70px rgba(116, 76, 255, 0.32);
+        text-align: center;
+        animation: successIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .success-icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 1rem;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(247, 216, 137, 0.28),
+          rgba(147, 91, 255, 0.09)
+        );
+        border: 1px solid rgba(247, 216, 137, 0.55);
+        font-size: 2rem;
+        box-shadow: 0 0 35px rgba(247, 216, 137, 0.2);
+      }
+      .success-card h3 {
+        margin: 0;
+        color: var(--gold);
+        font-size: clamp(1.7rem, 4vw, 2.45rem);
+      }
+      .success-card p {
+        margin: 0.75rem 0 1.1rem;
+        color: rgba(255, 255, 255, 0.84);
+        line-height: 1.55;
+      }
+      .continue {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+        border-radius: 999px;
+        padding: 0.85rem 1.5rem;
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+      .continue:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.11);
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 1.25rem;
+        z-index: 90;
+        transform: translate(-50%, 1rem);
+        background: rgba(18, 8, 32, 0.92);
+        border: 1px solid rgba(255, 143, 143, 0.42);
+        color: #fff;
+        padding: 0.8rem 1rem;
+        border-radius: 999px;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+        max-width: min(92vw, 560px);
+        text-align: center;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      @keyframes breathe {
+        from {
+          transform: scale(1.04);
+        }
+        to {
+          transform: scale(1.085);
+        }
+      }
+      @keyframes riseIn {
+        from {
+          opacity: 0;
+          transform: translateY(22px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes genieFloat {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0);
+        }
+        50% {
+          transform: translateY(-10px) rotate(0.7deg);
+        }
+      }
+      @keyframes floatSoft {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-7px);
+        }
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.6;
+          transform: scale(0.94);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.12);
+        }
+      }
+      @keyframes driftStars {
+        from {
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          transform: translate3d(30px, 18px, 0);
+        }
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinReverse {
+        to {
+          transform: rotate(-360deg);
+        }
+      }
+      @keyframes pulseRing {
+        0%,
+        100% {
+          transform: scale(0.92);
+          opacity: 0.55;
+        }
+        50% {
+          transform: scale(1.06);
+          opacity: 1;
+        }
+      }
+      @keyframes orbPulse {
+        0%,
+        100% {
+          transform: scale(0.9);
+        }
+        50% {
+          transform: scale(1.08);
+        }
+      }
+      @keyframes burst {
+        0% {
+          opacity: 1;
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(calc(var(--dx) * 1px), calc(var(--dy) * 1px))
+            scale(0.2);
+        }
+      }
+      @keyframes successIn {
+        from {
+          transform: translateY(22px) scale(0.97);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+      @media (max-width: 900px) {
+        .content {
+          padding-inline: 1rem;
+        }
+        .main {
+          grid-template-columns: 1fr;
+          gap: 0.5rem;
+          align-content: center;
+        }
+        .genie-side {
+          min-height: 42svh;
+          max-height: 46svh;
+        }
+        .genie {
+          width: min(94%, 460px);
+          max-height: 44svh;
+        }
+        .speech {
+          top: 0;
+          left: 0;
+          width: min(16rem, 68vw);
+          padding: 0.9rem 1rem;
+        }
+        .speech strong {
+          font-size: 1.04rem;
+        }
+        .wish-panel {
+          max-width: 720px;
+        }
+        h1 {
+          font-size: clamp(2.55rem, 10vw, 4.2rem);
+        }
+        .promise {
+          font-size: 1.05rem;
+          margin-top: 0.7rem;
+        }
+        form {
+          margin-top: 1rem;
+        }
+        textarea {
+          min-height: 120px;
+        }
+        .promise-row {
+          margin-top: 0.9rem;
+          gap: 0.3rem;
+        }
+        .promise-item {
+          font-size: 0.7rem;
+        }
+      }
+      @media (max-width: 560px) {
+        header {
+          align-items: flex-start;
+        }
+        .make-wish {
+          display: none;
+        }
+        .genie-side {
+          min-height: 37svh;
+          max-height: 41svh;
+        }
+        .genie {
+          max-height: 39svh;
+        }
+        .speech {
+          width: 13.5rem;
+        }
+        .speech strong {
+          font-size: 0.96rem;
+        }
+        textarea {
+          font-size: 1rem;
+          min-height: 112px;
+        }
+        .send {
+          width: 100%;
+          min-width: 0;
+        }
+        .privacy {
+          font-size: 0.8rem;
+        }
+        footer p:first-child {
+          font-size: 0.92rem;
+        }
+        footer p:last-child {
+          font-size: 0.8rem;
+        }
+        .success-card {
+          padding: 1.4rem;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <img
+        class="bg"
+        src="./assets/night-terrace.jpg"
+        alt=""
+        aria-hidden="true"
+      />
+      <div class="veil"></div>
+      <div class="stars"></div>
+      <div class="magic-vignette"></div>
+      <div class="content">
+        <header>
+          <p class="brand">For Deepika ♡</p>
+          <p class="make-wish">Make a wish...</p>
+        </header>
+        <section class="main">
+          <div class="genie-side">
+            <img
+              class="genie"
+              src="./assets/genie-prince.png"
+              alt="Magical genie prince rising from a golden lamp"
+            />
+            <div class="speech">
+              <strong
+                >Hey Deepika...<br />I'm your Jini ♥<br />Tell me your
+                wish...</strong
+              >
+            </div>
+          </div>
+          <section class="wish-panel" aria-labelledby="wishTitle">
+            <p class="eyebrow">A little magic, just for you</p>
+            <h1 id="wishTitle">My <span>Prince</span> says...</h1>
+            <p class="promise">
+              “Tell me any <span class="wish-word">wish</span>,<br />and I'll
+              try to make it <span class="real-word">real</span>
+              <span class="day-word">within one day.</span>”
+            </p>
+            <p class="subtitle">
+              Just make a wish, Deepika... your Jini is listening. 🧞‍♂️❤️
+            </p>
+            <form id="wishForm" novalidate>
+              <div class="input-wrap">
+                <textarea
+                  id="wishInput"
+                  rows="4"
+                  maxlength="2000"
+                  placeholder="Type your wish here..."
+                  aria-label="Your wish"
+                ></textarea
+                ><span class="sparkle-icon">✦</span>
+              </div>
+              <button class="send" id="sendWish" type="submit">
+                ✈️ Send My Wish
+              </button>
+            </form>
+            <p class="privacy">
+              🔒 Your wish will be sent to my Prince ❤️<br /><span
+                style="opacity: 0.72"
+                >(It's a secret between us)</span
+              >
+            </p>
+            <div class="promise-row">
+              <div class="promise-item">
+                <span class="icon">♡</span>Any Wish
+              </div>
+              <div class="promise-item">
+                <span class="icon">∞</span>Within One Day
+              </div>
+              <div class="promise-item">
+                <span class="icon">☆</span>I'll Try My Best
+              </div>
+              <div class="promise-item">
+                <span class="icon">♕</span>Because You Deserve It
+              </div>
+            </div>
+          </section>
+        </section>
+        <footer>
+          <p>Dream · Wish · Believe · Receive ♡</p>
+          <p>May all your dreams come true ♡</p>
+        </footer>
+      </div>
+      <div class="magic-overlay" id="magicOverlay" aria-hidden="true">
+        <div class="magic-core">
+          <div class="magic-ring"></div>
+          <div class="magic-orb"></div>
+          <div id="burstField"></div>
+          <div class="magic-text">
+            <h2>Your wish is on its way ✨</h2>
+            <p>Keep it safe in your heart...</p>
+          </div>
+        </div>
+      </div>
+      <div class="success-panel" id="successPanel" aria-hidden="true">
+        <div class="success-card">
+          <div class="success-icon">💌</div>
+          <h3>Your wish has reached me ❤️</h3>
+          <p>Your Jini has received it. Now let the magic begin...</p>
+          <button class="continue" id="continueBtn" type="button">
+            Continue the magic ✨
+          </button>
+        </div>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </main>
+    <audio
+      id="magicAudio"
+      preload="auto"
+      src="./assets/sounds/magic-wish.mp3"
+    ></audio>
+    <script>
+      const WISH_MAIL_ENDPOINT = "";
+      const WISH_EMAIL = "YOUR_EMAIL@example.com";
+      const NEXT_PAGE = "letter.html";
+      const form = document.getElementById("wishForm"),
+        input = document.getElementById("wishInput"),
+        sendBtn = document.getElementById("sendWish"),
+        overlay = document.getElementById("magicOverlay"),
+        successPanel = document.getElementById("successPanel"),
+        continueBtn = document.getElementById("continueBtn"),
+        magicAudio = document.getElementById("magicAudio"),
+        burstField = document.getElementById("burstField"),
+        toast = document.getElementById("toast"),
+        genie = document.querySelector(".genie");
+      let submitting = false,
+        toastTimer = null;
+      function showToast(m) {
+        clearTimeout(toastTimer);
+        toast.textContent = m;
+        toast.classList.add("show");
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
+      }
+      function burstMagic() {
+        burstField.innerHTML = "";
+        const count = innerWidth < 600 ? 28 : 44,
+          radius = Math.min(innerWidth, innerHeight) * 0.34;
+        for (let i = 0; i < count; i++) {
+          const d = document.createElement("span");
+          d.className = "magic-burst";
+          const a = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.35,
+            dist = radius * (0.45 + Math.random() * 0.75);
+          d.style.setProperty("--dx", Math.cos(a) * dist);
+          d.style.setProperty("--dy", Math.sin(a) * dist);
+          d.style.animationDelay = `${Math.random() * 0.25}s`;
+          burstField.appendChild(d);
+        }
+      }
+      async function playMagicAudio() {
+        magicAudio.currentTime = 0;
+        try {
+          await magicAudio.play();
+        } catch (e) {}
+      }
+      function animateGenie() {
+        genie.style.filter =
+          "drop-shadow(0 0 65px rgba(100,180,255,.85)) drop-shadow(0 0 100px rgba(245,139,210,.42))";
+        genie.style.transform = "scale(1.045) rotate(-1deg)";
+        setTimeout(() => {
+          genie.style.filter = "";
+          genie.style.transform = "";
+        }, 1600);
+      }
+      async function sendWish(wish) {
+        if (typeof window.submitWish === "function") {
+          await window.submitWish(wish);
+          return;
+        }
+        if (WISH_MAIL_ENDPOINT) {
+          const r = await fetch(WISH_MAIL_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: "Deepika",
+              wish,
+              sentAt: new Date().toISOString(),
+              source: "Deepika Birthday Wish Chamber",
+            }),
+          });
+          if (!r.ok) throw new Error(`Mail endpoint returned ${r.status}`);
+          return;
+        }
+        if (WISH_EMAIL && !WISH_EMAIL.includes("YOUR_EMAIL")) {
+          const subject = encodeURIComponent("💌 A New Wish From Deepika"),
+            body = encodeURIComponent(
+              `A new wish was sent from Deepika's birthday wish chamber.\n\nWish:\n${wish}\n\nSent at: ${new Date().toLocaleString()}`,
+            );
+          location.href = `mailto:${WISH_EMAIL}?subject=${subject}&body=${body}`;
+        }
+      }
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (submitting) return;
+        const wish = input.value.trim();
+        if (!wish) {
+          input.focus();
+          showToast("Write your wish first, Deepika ✨");
+          return;
+        }
+        submitting = true;
+        sendBtn.disabled = true;
+        sendBtn.textContent = "✨ Making a little magic...";
+        await playMagicAudio();
+        try {
+          await sendWish(wish);
+          overlay.classList.add("active");
+          burstMagic();
+          animateGenie();
+          setTimeout(() => {
+            overlay.classList.remove("active");
+            successPanel.classList.add("show");
+            successPanel.setAttribute("aria-hidden", "false");
+            input.value = "";
+          }, 2350);
+        } catch (err) {
+          console.error(err);
+          showToast("The magic paused. Please try sending your wish again.");
+        } finally {
+          setTimeout(() => {
+            submitting = false;
+            sendBtn.disabled = false;
+            sendBtn.textContent = "✈️ Send My Wish";
+          }, 2600);
+        }
+      });
+      continueBtn.addEventListener("click", () => {
+        location.href = NEXT_PAGE;
+      });
+      input.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === "Enter") form.requestSubmit();
+      });
+    </script>
+  </body>
+</html>

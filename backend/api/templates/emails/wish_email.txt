@@ -1,0 +1,13 @@
+💖 Deepika Sent You a Birthday Wish
+
+Her Wish:
+----------------------------------------
+{{ raw_wish_text }}
+----------------------------------------
+
+{% if media_url %}
+Attached Media: {{ media_url }}
+{% endif %}
+
+✨ Open Birthday Surprise:
+{{ birthday_site_url }}

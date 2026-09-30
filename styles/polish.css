@@ -1,0 +1,11 @@
+/* Shared finishing layer: motion, focus treatment, and responsive safeguards. */
+:root { --premium-pink:#ed8fbd; --premium-lavender:#b8a4ef; --premium-purple:#7d61c3; --premium-sky:#7dc3ef; --premium-gold:#f0cb76; --premium-ink:#1d1732; }
+/* HTML background is specified per page theme */
+body { font-family:Poppins,Inter,system-ui,sans-serif; opacity:0; transition:opacity .62s ease,filter .62s ease; }
+body.page-ready { opacity:1; }
+body.page-leaving { opacity:0; filter:blur(3px); pointer-events:none; }
+img { max-width:100%; height:auto; }
+button, textarea, input { -webkit-tap-highlight-color:transparent; }
+button:focus-visible, a:focus-visible, textarea:focus-visible, input:focus-visible { outline:3px solid var(--premium-sky)!important; outline-offset:3px; }
+@media (max-width:480px) { button { min-height:44px; } }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } body { transition-duration:.01ms!important; } }
