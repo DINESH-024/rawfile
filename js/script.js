@@ -41,7 +41,7 @@ form.addEventListener('submit', async (event) => {
       if (panel) panel.classList.add('secret-unlocked');
       setResult('✨ Access granted. Preparing secret experience...', '#7d61c3');
       localStorage.setItem('birthdaySecret', 'true');
-      setTimeout(() => { window.navigateWithTransition?.('candle.html') || (window.location.href = 'candle.html'); }, 1000);
+      setTimeout(() => { window.navigateWithTransition?.('Candle.html') || (window.location.href = 'Candle.html'); }, 1000);
       return;
     }
     setResult('Thank you for your feedback.', '#4c9b7e'); resetForm();
