@@ -339,10 +339,11 @@ def send_wish(request):
             api_url,
             data=request_body,
             headers={
-                "Authorization": f"Bearer {resend_api_key}",
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
+    "Authorization": f"Bearer {resend_api_key}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "User-Agent": "DeepikaBirthday/1.0",
+},
             method="POST",
         )
 
